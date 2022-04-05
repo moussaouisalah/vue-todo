@@ -1,6 +1,11 @@
 <template>
   <AddTodo @add-todo="addTodo" />
-  <TodoItem v-for="item in todos" :key="item.id" :todo="item" />
+  <TodoItem
+    v-for="item in todos"
+    :key="item.id"
+    :todo="item"
+    @delete-todo="deleteTodo(item.id)"
+  />
 </template>
 
 <script>
@@ -25,6 +30,9 @@ export default {
         title,
       };
       this.todos.push(todo);
+    },
+    deleteTodo(id) {
+      this.todos = this.todos.filter((item) => item.id !== id);
     },
   },
 };
