@@ -1,24 +1,31 @@
 <template>
-  <h1>hello world!</h1>
+  <AddTodo @add-todo="addTodo" />
   <TodoItem v-for="item in todos" :key="item.id" :todo="item" />
 </template>
 
 <script>
 import TodoItem from "./components/TodoItem.vue";
+import AddTodo from "./components/AddTodo.vue";
 
 export default {
   name: "App",
   components: {
     TodoItem,
+    AddTodo,
   },
   data() {
     return {
-      todos: [
-        { id: 1, title: "Todo 1" },
-        { id: 2, title: "Todo 2" },
-        { id: 3, title: "Todo 3" },
-      ],
+      todos: [],
     };
+  },
+  methods: {
+    addTodo(title) {
+      const todo = {
+        id: Math.floor(Math.random() * 100000),
+        title,
+      };
+      this.todos.push(todo);
+    },
   },
 };
 </script>
