@@ -11,6 +11,7 @@
         :key="item.id"
         :todo="item"
         @delete-todo="deleteTodo(item.id)"
+        @toggle-todo-status="toggleTodoStatus(item.id)"
       />
     </div>
   </div>
@@ -36,11 +37,20 @@ export default {
       const todo = {
         id: Math.floor(Math.random() * 100000),
         title,
+        isCompleted: false,
       };
       this.todos.push(todo);
     },
     deleteTodo(id) {
       this.todos = this.todos.filter((item) => item.id !== id);
+    },
+    toggleTodoStatus(id) {
+      this.todos = this.todos.map((item) => {
+        if (item.id === id) {
+          item.isCompleted = !item.isCompleted;
+        }
+        return item;
+      });
     },
   },
 };
