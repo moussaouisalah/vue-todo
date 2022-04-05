@@ -1,11 +1,19 @@
 <template>
-  <AddTodo @add-todo="addTodo" />
-  <TodoItem
-    v-for="item in todos"
-    :key="item.id"
-    :todo="item"
-    @delete-todo="deleteTodo(item.id)"
-  />
+  <div
+    class="w-screen min-h-screen bg-gray-900 flex flex-col items-center p-10 gap-5"
+  >
+    <h1 class="text-2xl font-bold text-gray-50">Vue Todo</h1>
+    <AddTodo @add-todo="addTodo" />
+    <div class="w-full flex flex-col items-center gap-2 max-w-xl">
+      <h2 class="self-start text-gray-50 font-bold text-lg">Todos</h2>
+      <TodoItem
+        v-for="item in todos"
+        :key="item.id"
+        :todo="item"
+        @delete-todo="deleteTodo(item.id)"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
