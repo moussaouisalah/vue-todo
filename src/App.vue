@@ -64,20 +64,46 @@ export default {
       return filters[this.filter](this.todos);
     },
   },
+  mounted() {
+    this.fetchTodos();
+  },
   methods: {
-    addTodo({ title, description }) {
+    async addTodo({ title, description }) {
       const todo = {
-        id: Math.floor(Math.random() * 100000),
         title,
         description,
         isCompleted: false,
       };
-      this.todos.push(todo);
+      const response = await fetch("http://localhost:3000/todos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(todo),
+      });
+      const data = await response.json();
+      this.todos.push(data);
     },
-    deleteTodo(id) {
+    async fetchTodos() {
+      const response = await fetch("http://localhost:3000/todos");
+      const data = await response.json();
+      this.todos = data;
+    },
+    async deleteTodo(id) {
+      await fetch(`http://localhost:3000/todos/${id}`, {
+        method: "DELETE",
+      });
       this.todos = this.todos.filter((item) => item.id !== id);
     },
-    toggleTodoStatus(id) {
+    async toggleTodoStatus(id) {
+      const todo = this.todos.find((item) => item.id === id);
+      await fetch(`http://localhost:3000/todos/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isCompleted: !todo.isCompleted }),
+      });
       this.todos = this.todos.map((item) => {
         if (item.id === id) {
           item.isCompleted = !item.isCompleted;
