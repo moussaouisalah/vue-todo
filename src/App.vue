@@ -33,10 +33,11 @@ export default {
     };
   },
   methods: {
-    addTodo(title) {
+    addTodo({ title, description }) {
       const todo = {
         id: Math.floor(Math.random() * 100000),
         title,
+        description,
         isCompleted: false,
       };
       this.todos.push(todo);

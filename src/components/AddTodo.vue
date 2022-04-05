@@ -12,6 +12,15 @@
         class="h-10 p-2 rounded-md outline-none w-full"
       />
     </div>
+    <div class="flex flex-col gap-1 w-full">
+      <label for="title" class="text-gray-300">Description</label>
+      <textarea
+        v-model="description"
+        placeholder="Enter a Description..."
+        rows="3"
+        class="p-2 rounded-md outline-none w-full"
+      ></textarea>
+    </div>
     <button
       class="bg-blue-400 text-gray-50 font-bold px-5 py-2 rounded-md w-max hover:bg-blue-500"
     >
@@ -26,12 +35,20 @@ export default {
   data() {
     return {
       title: "",
+      description: "",
     };
   },
   methods: {
     handleAddTodo() {
-      this.$emit("add-todo", this.title);
+      if (this.title.trim() === "") {
+        return;
+      }
+      this.$emit("add-todo", {
+        title: this.title,
+        description: this.description,
+      });
       this.title = "";
+      this.description = "";
     },
   },
 };
